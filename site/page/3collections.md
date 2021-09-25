@@ -33,6 +33,12 @@ type: page
 
     C#/VB/F# compiler playground
 
+## 规范
+
+### 通用
+
+- 中文技术文档的写作规范：<https://github.com/ruanyf/document-style-guide>
+
 ## Comments
 
 {% include comments.html %}
