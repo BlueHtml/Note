@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "async void导致程序崩溃"
+title:  "async void 导致程序崩溃"
 categories: 编程
 tags: csharp cs基础
 excerpt: C#中要谨慎使用async void，因为它可能会导致程序崩溃。
