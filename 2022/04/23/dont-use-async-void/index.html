@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>async void 导致程序崩溃</title>
+    <meta name="description" content="C#中要谨慎使用async void，因为它可能会导致程序崩溃。">
+
+    <link rel="shortcut icon" href="/favicon.png?" type="image/x-icon">
+    <link rel="icon" href="/favicon.png?" type="image/x-icon">
+    <link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="https://note.guoqianfan.com/2022/04/23/dont-use-async-void/">
+    <link rel="alternate" type="application/rss+xml" title="过千帆的记事本" href="https://note.guoqianfan.com/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?fbc3d6124344895dc5d3439066160d3c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZVV5B1EV9"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	
+	gtag('config', 'G-0ZVV5B1EV9');
+	</script>
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">过千帆的记事本</a>
+        <small>记录点滴</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>Collections
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/demo/">
+                        
+                            <i class="fa fa-play"></i>Demo
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>async void 导致程序崩溃</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2022-04-23
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>过千帆
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#编程" title="Category: 编程" rel="category">编程</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#csharp" title="Tag: csharp" rel="tag">csharp</a-->
+        <a href="/tag/#csharp" title="Tag: csharp" rel="tag">csharp</a>&nbsp;
+    
+        <!--a href="/tag/#cs%E5%9F%BA%E7%A1%80" title="Tag: cs基础" rel="tag">cs基础</a-->
+        <a href="/tag/#cs基础" title="Tag: cs基础" rel="tag">cs基础</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#前言" id="markdown-toc-前言">前言</a></li>
+  <li><a href="#async-void-方法的异常无法被捕获" id="markdown-toc-async-void-方法的异常无法被捕获">async-void-方法的异常无法被捕获</a>    <ul>
+      <li><a href="#注意" id="markdown-toc-注意">注意</a></li>
+    </ul>
+  </li>
+  <li><a href="#测试" id="markdown-toc-测试">测试</a>    <ul>
+      <li><a href="#崩溃" id="markdown-toc-崩溃">崩溃</a>        <ul>
+          <li><a href="#注意-1" id="markdown-toc-注意-1">注意</a></li>
+        </ul>
+      </li>
+      <li><a href="#不崩溃" id="markdown-toc-不崩溃">不崩溃</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="前言">前言</h2>
+
+<p>之前都是在文档里看到：除了<strong>winform的事件</strong>可以使用<code class="language-plaintext highlighter-rouge">async void</code>，其他情况下<strong>绝对不能</strong>使用<code class="language-plaintext highlighter-rouge">async void</code>，而是要用<code class="language-plaintext highlighter-rouge">async Task</code>。</p>
+
+<p>对于这个规范，虽然不是很明白内里原因，但是一直遵守着。</p>
+
+<p>直到这天看到了这篇博客：<a href="https://dotblogs.com.tw/supershowwei/2021/11/21/145303">在 ASP.NET Core 中誤用 async void 竟引發了 502（Bad Gateway）</a>，说<code class="language-plaintext highlighter-rouge">async void</code>里出现异常时会导致程序崩溃。研究测试了一番，终于明白原因。</p>
+
+<p>摘录重点如下：</p>
+<blockquote>
+  <p>根據使用者提供的另一個線索「網站的某個功能壞了」，我們繼續往下追查，從程式碼當中我看到了一個近期新加的方法，它使用了 async void，沒錯，它使用了 async void，而且很不幸地它會發生 Exception，更慘的是這個 Exception 沒有被處理。</p>
+
+  <p>對 C# 非同步程式設計有了解的朋友，看到這邊應該大致上可以知道是發什麼問題了，<a href="https://docs.microsoft.com/zh-cn/archive/msdn-magazine/2013/march/async-await-best-practices-in-asynchronous-programming#避免-async-void">async void 是建議應該避免使用的宣告方式</a>，其中一個原因就是當 async void 方法發生 Exception 時無法從呼叫端捕獲，即使加了 try…catch… 也沒用，async void 方法就有點像是我們自己起了另一個 Thread 去執行程式一樣，執行的過程中如果發生 Exception 沒有去處理，Exception 就會一路被往上拋，最終在 AppDomain 層級被捕獲，然後我們的應用程式就掛了。</p>
+</blockquote>
+
+<h2 id="async-void-方法的异常无法被捕获">async-void-方法的异常无法被捕获</h2>
+
+<p><code class="language-plaintext highlighter-rouge">async void</code>方法抛出的异常<strong>无法被捕获</strong>，异常会被一直往上面抛，最终在AppDomain层级被捕获，然后程序就挂了。</p>
+
+<p>示例代码如下：</p>
+<div class="language-cs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">async</span> <span class="k">void</span> <span class="nf">Get</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="nf">ThrowExceptionAsync</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">//这里不能捕获到异常，程序崩溃！</span>
+        <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="s">"ex..."</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">async</span> <span class="k">void</span> <span class="nf">ThrowExceptionAsync</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">"async void ex!"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="注意">注意</h3>
+
+<p>前面所说的是 <strong><code class="language-plaintext highlighter-rouge">async void</code>方法抛出的无法预知到的异常</strong>。在<code class="language-plaintext highlighter-rouge">async void</code>方法内部，我们仍然能够使用<code class="language-plaintext highlighter-rouge">try catch</code>，逻辑是正常逻辑。具体见下面的示例：</p>
+<div class="language-cs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">async</span> <span class="k">void</span> <span class="nf">Get</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">//在async void方法内部，我们仍然能够使用try catch，逻辑是正常逻辑。</span>
+    <span class="c1">//此处try catch是有效的。异常被捕获处理了，async void方法执行无异常，不会导致程序崩溃。</span>
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Run</span><span class="p">(()</span> <span class="p">=&gt;</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">"ex!"</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_logger</span><span class="p">.</span><span class="nf">LogInformation</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span><span class="s">"ex..."</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="测试">测试</h2>
+
+<h3 id="崩溃">崩溃</h3>
+
+<p>出现异常时能导致崩溃的代码有2种，如下：</p>
+<div class="language-cs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">async</span> <span class="k">void</span> <span class="nf">Get</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">//异常会导致程序崩溃</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">"ex!"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">async</span> <span class="k">void</span> <span class="nf">Get</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">//异常会导致程序崩溃</span>
+    <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Run</span><span class="p">(()</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">"ex!"</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="注意-1">注意</h4>
+
+<p>下面的<code class="language-plaintext highlighter-rouge">async void</code>代码不会抛异常。</p>
+<div class="language-cs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">async</span> <span class="k">void</span> <span class="nf">Get</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Task</span><span class="p">.</span><span class="nf">Run</span><span class="p">(()</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">"ex!"</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>代码里的<code class="language-plaintext highlighter-rouge">async void</code>没问题(不抛异常)，其实也符合逻辑。因为<code class="language-plaintext highlighter-rouge">async void</code>里面<strong>没有异常</strong>，自然就不会导致程序崩溃。</p>
+
+<p>异常在<code class="language-plaintext highlighter-rouge">Task.Run</code>里面，因为<strong>没有使用<code class="language-plaintext highlighter-rouge">await</code>进行等待</strong>，那么异常就是被<strong>线程池线程</strong>捕获的，它们捕获到后，不会再往上面抛了，直接自己内部消化掉了。</p>
+
+<p>因为<code class="language-plaintext highlighter-rouge">async void</code>在执行时<strong>没有异常</strong>，自然就不会导致程序崩溃。</p>
+
+<p>但是由于我们不能保证所有代码都没有异常，所以<strong>不要</strong>使用<code class="language-plaintext highlighter-rouge">async void</code>！</p>
+
+<h3 id="不崩溃">不崩溃</h3>
+
+<p>只要<strong>不是</strong><code class="language-plaintext highlighter-rouge">async void</code>，就算请求处理程序抛出了异常，也不会影响到<strong>主线程</strong>的。最多就是这次请求出错，返回<code class="language-plaintext highlighter-rouge">500 Internal Server Error</code>而已。</p>
+
+<p>测试的几种代码如下：</p>
+<div class="language-cs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">Get</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">//500错误码</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">"ex!"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">[</span><span class="n">HttpGet</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">Get</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">//500错误码</span>
+    <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Run</span><span class="p">(()</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">"ex!"</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+        
+<hr>
+<p>
+    本文会经常更新，请阅读原文： <a href="https://note.guoqianfan.com/2022/04/23/dont-use-async-void/">https://note.guoqianfan.com/2022/04/23/dont-use-async-void/</a> ，以避免陈旧错误知识的误导，同时有更好的阅读体验。
+</p>
+<p>    
+    如果你想持续阅读我的最新博客，请点击 <a href="/feed.xml">RSS 订阅</a>。
+</p>
+<p>
+    <a rel="知识共享许可协议" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+        <img alt="知识共享许可协议" src="https://img.guoqianfan.com/public/by-nc-sa.svg" />
+    </a>
+    本作品采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a> 进行许可。欢迎转载、使用、重新发布，但务必保留文章署名 过千帆的记事本（包含链接： <a href="https://note.guoqianfan.com">https://note.guoqianfan.com</a> ），不得用于商业目的，基于本文修改后的作品务必以相同的许可发布。如有任何疑问，请 <a href="mailto:gg@guoqianfan.com">与我联系</a> 。
+</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">Similar Posts</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2022/04/22/operator-implicit-explicit-in-csharp/">C#中的类型转换-自定义隐式转换和显式转换
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2022/04/22/operator-implicit-explicit-in-csharp/">C#中的类型转换-自定义隐式转换和显式转换</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2022/04/25/neighbor-during-omicron/">那个喊了十三声发物资的邻居</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">Comments</h2>
+        
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC81Mjc1Ni8yOTIzMw==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">Similar Posts</a></li>
+                    
+                    <li><a href="#comments">Comments</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+
+document.querySelectorAll("div.highlighter-rouge[class*='language']")
+    .forEach(p => p.setAttribute('data-lang', [...p.classList].find(c => c.includes("language")).split('-')[1].replace('plaintext',''))
+    );
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             存在的痕迹 
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/BlueHtml" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:gg@guoqianfan.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>         
+            <a href="https://t.me/Xiao_C" title="Telegram"><i class="fa fa-telegram" aria-hidden="true"></i></a>  
+            <a href="/feed.xml" title="RSS"><i class="fa fa-rss" aria-hidden="true"></i></a> 
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a> & <a href="https://pages.github.com/">Github Pages</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

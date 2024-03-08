@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>如何使用云数据库Redis助力游戏行业发展-阿里云</title>
+    <meta name="description" content="本文是观看 如何使用云数据库Redis助力游戏行业发展-阿里云redis直播 之后的个人总结。">
+
+    <link rel="shortcut icon" href="/favicon.png?" type="image/x-icon">
+    <link rel="icon" href="/favicon.png?" type="image/x-icon">
+    <link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="https://note.guoqianfan.com/2021/09/25/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E4%BA%91%E6%95%B0%E6%8D%AE%E5%BA%93Redis%E5%8A%A9%E5%8A%9B%E6%B8%B8%E6%88%8F%E8%A1%8C%E4%B8%9A%E5%8F%91%E5%B1%95-%E9%98%BF%E9%87%8C%E4%BA%91/">
+    <link rel="alternate" type="application/rss+xml" title="过千帆的记事本" href="https://note.guoqianfan.com/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?fbc3d6124344895dc5d3439066160d3c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZVV5B1EV9"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	
+	gtag('config', 'G-0ZVV5B1EV9');
+	</script>
+
+
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">过千帆的记事本</a>
+        <small>记录点滴</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>Collections
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/demo/">
+                        
+                            <i class="fa fa-play"></i>Demo
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>如何使用云数据库Redis助力游戏行业发展-阿里云</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2021-09-25
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>过千帆
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#技术" title="Category: 技术" rel="category">技术</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#redis" title="Tag: redis" rel="tag">redis</a-->
+        <a href="/tag/#redis" title="Tag: redis" rel="tag">redis</a>&nbsp;
+    
+        <!--a href="/tag/#%E9%98%BF%E9%87%8C%E4%BA%91" title="Tag: 阿里云" rel="tag">阿里云</a-->
+        <a href="/tag/#阿里云" title="Tag: 阿里云" rel="tag">阿里云</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#传统数据库的压力和发展" id="markdown-toc-传统数据库的压力和发展">传统数据库的压力和发展</a></li>
+  <li><a href="#阿里云产品架构" id="markdown-toc-阿里云产品架构">阿里云产品架构</a>    <ul>
+      <li><a href="#标准版" id="markdown-toc-标准版">标准版</a>        <ul>
+          <li><a href="#单副本" id="markdown-toc-单副本">单副本</a></li>
+          <li><a href="#双副本" id="markdown-toc-双副本">双副本</a></li>
+        </ul>
+      </li>
+      <li><a href="#集群版" id="markdown-toc-集群版">集群版</a></li>
+      <li><a href="#读写分离版" id="markdown-toc-读写分离版">读写分离版</a></li>
+    </ul>
+  </li>
+  <li><a href="#场景和业务" id="markdown-toc-场景和业务">场景和业务</a>    <ul>
+      <li><a href="#游戏" id="markdown-toc-游戏">游戏</a></li>
+      <li><a href="#视频直播" id="markdown-toc-视频直播">视频直播</a></li>
+      <li><a href="#其他" id="markdown-toc-其他">其他</a></li>
+    </ul>
+  </li>
+  <li><a href="#其他-1" id="markdown-toc-其他-1">其他</a>    <ul>
+      <li><a href="#oltp和olap的区别" id="markdown-toc-oltp和olap的区别">OLTP和OLAP的区别</a></li>
+    </ul>
+  </li>
+  <li><a href="#视频" id="markdown-toc-视频">视频</a></li>
+</ul>
+
+<blockquote>
+  <p>本文是观看<a href="https://www.bilibili.com/video/BV1pf4y1E7Tp?p=5">如何使用云数据库Redis助力游戏行业发展-阿里云redis直播</a>之后的个人总结，视频已附在文末。</p>
+</blockquote>
+
+<h2 id="传统数据库的压力和发展">传统数据库的压力和发展</h2>
+
+<p>发展：OLTP SQL数据库-&gt;NoSQL数据库-&gt;Key-Value缓存数据库-&gt;OLAP数据仓库-&gt;大数据离线分析</p>
+
+<ul>
+  <li>OLTP SQL数据库：正常的交易类数据。账单…</li>
+  <li>NoSQL数据库：服务关系图谱类数据</li>
+  <li>Key-Value缓存数据库：热数据，需要经常被访问的数据</li>
+  <li>OLAP数据仓库：大的数据，沉淀数据，存储到OLAP数据仓库的BI引擎里，经过OLAP小型数仓会做一些在线的实时处理分析</li>
+  <li>大数据离线分析：长久化、历史性的数据，存储到大数据的分析平台，进行离线的大数据分析。通过大数据分析之后，把统计出来的核心报表数据再存储到OLTP或OLAP数据库里，进行实时查询。</li>
+</ul>
+
+<h2 id="阿里云产品架构">阿里云产品架构</h2>
+
+<h3 id="标准版">标准版</h3>
+
+<h4 id="单副本">单副本</h4>
+
+<p><img src="https://jihulab.com/po/img/-/raw/main/note/2021/08/redis-助力发展-标准版-单副本.png" alt="redis-助力发展-标准版-单副本" /></p>
+
+<p>单副本：SLA：2副本，HA高可用，秒级切换。QPS：7W。</p>
+
+<p>当HA发现<code class="language-plaintext highlighter-rouge">老redis</code>进程无响应后（宕机、假死），会新起一个redis进程，切换到<code class="language-plaintext highlighter-rouge">新redis</code>上。<code class="language-plaintext highlighter-rouge">老redis</code>的数据是<strong>没了</strong>的。</p>
+
+<p>假死也算，我们项目用的阿里云redis由于CPU过高，无响应，被HA认为死掉了，然后被重启了，数据全没了。很坑爹！</p>
+
+<h4 id="双副本">双副本</h4>
+
+<p><img src="https://jihulab.com/po/img/-/raw/main/note/2021/08/redis-助力发展-标准版-双副本.png" alt="redis-助力发展-标准版-双副本" /></p>
+
+<p>双副本是master-slave架构，当master出现问题后，HA会切换到slave上，数据仍然在的（也有可能因为同步延迟导致少量数据未及时同步到slave上）。</p>
+
+<p>QPS：8-10W。</p>
+
+<h3 id="集群版">集群版</h3>
+
+<p><img src="https://jihulab.com/po/img/-/raw/main/note/2021/08/redis-助力发展-集群版-双副本.png" alt="redis-助力发展-集群版-双副本" /></p>
+
+<ul>
+  <li>单副本：宕机丢数据</li>
+  <li>双副本：宕机切换到slave，有数据</li>
+</ul>
+
+<p>扩展读和写能力。QPS：集群数量 * 7W</p>
+
+<h3 id="读写分离版">读写分离版</h3>
+
+<p><img src="https://jihulab.com/po/img/-/raw/main/note/2021/08/redis-助力发展-读写分离版.png" alt="redis-助力发展-读写分离版" /></p>
+
+<ul>
+  <li>扩展读能力。</li>
+  <li>宕机切换到slave，有数据</li>
+  <li>读的QPS：读节点数量 * 7W</li>
+  <li>读节点的数据有毫秒级不一致（同步延迟）</li>
+</ul>
+
+<h2 id="场景和业务">场景和业务</h2>
+
+<h3 id="游戏">游戏</h3>
+
+<p>游戏的行业特性：</p>
+<ul>
+  <li>滚服。
+    <ul>
+      <li>业务：随时开服，一天多服。</li>
+      <li>例如：斗地主。同一时刻会开启多个房间，一天内会开很多很多个房间。一个房间满了之后，会立刻开启一个新的房间。</li>
+      <li>此时，每个房间都是一个redis实例。立即克隆一个相同配置的redis实例出来。</li>
+    </ul>
+  </li>
+  <li>灌服。
+    <ul>
+      <li>业务：疯狂灌人，配置逐步增大。</li>
+      <li>例如：一个游戏越来越火爆，日活越来越多。</li>
+      <li>传统数据库会不断进行升级、调优什么的。用redis可以增加配置，用集群版，增加一个新的集群节点，同时提高读写能力。</li>
+    </ul>
+  </li>
+  <li>合服。
+    <ul>
+      <li>业务：业务收尾，多服合并。</li>
+      <li>例如：游戏进入衰退期，需要撤掉一些服务器，把这些服务器里的人合并到一个服务器里去。</li>
+      <li>阿里云redis提供数据合并服务。</li>
+    </ul>
+  </li>
+  <li>闪回。
+    <ul>
+      <li>业务：快速回滚，时间点或局部恢复。</li>
+      <li>例如：游戏更新后出现BUG，需要回退到之前的版本。</li>
+      <li>阿里云redis提供数据归档，可以 时间点或局部 快速回滚/恢复。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="视频直播">视频直播</h3>
+
+<p>每个直播间都是一个redis实例。业务需求：</p>
+<ul>
+  <li>稳定性高于一切。</li>
+  <li>低内存高QPS。弹幕？</li>
+  <li>连接数较大。观看观众多。</li>
+</ul>
+
+<p>可能场景及应对：</p>
+<ul>
+  <li>大V：大V的直播间是预先知道的，肯定会热门。此时可以使用redis读写分离，来缓解热key问题。</li>
+  <li>不可预知的热门主播/房间：对于突然火起来的房间，因为是无法预知的，出现热key，可能会把redis打爆。此时可以用集群版，它的上层有个proxy层，可以缓存一些热key，缓解redis的压力。</li>
+</ul>
+
+<h3 id="其他">其他</h3>
+
+<p>新闻：极高QPS，热升级、无缝扩容。</p>
+
+<p>新闻类业务要求24小时均在线，所以是不可能停机维护升级的，只能要求热升级。</p>
+
+<p>而阿里云redis是支持热升级、无缝扩容的。（应该是通过新起一个redis实例，复制数据，然后切换过来实现的）</p>
+
+<h2 id="其他-1">其他</h2>
+
+<h3 id="oltp和olap的区别">OLTP和OLAP的区别</h3>
+
+<blockquote>
+  <p>选自：<a href="https://www.zhihu.com/question/24110442/answer/851671343">https://www.zhihu.com/question/24110442/answer/851671343</a></p>
+</blockquote>
+
+<p>OLTP（on-line transaction processing）翻译为联机事务处理， OLAP（On-Line Analytical Processing）翻译为联机分析处理，从字面上来看OLTP是做事务处理，OLAP是做分析处理。从对数据库操作来看，OLTP主要是对数据的增删改，OLAP是对数据的查询。</p>
+
+<p>再从应用上来看看OLTP与OLAP的区别。</p>
+
+<p>OLTP主要用来记录某类业务事件的发生，如购买行为，当行为产生后，系统会记录是谁在何时何地做了何事，这样的一行（或多行）数据会以增删改的方式在数据库中进行数据的更新处理操作，要求实时性高、稳定性强、确保数据及时更新成功，像公司常见的业务系统如ERP，CRM，OA等系统都属于OLTP。</p>
+
+<p>当数据积累到一定的程度，我们需要对过去发生的事情做一个总结分析时，就需要把过去一段时间内产生的数据拿出来进行统计分析，从中获取我们想要的信息，为公司做决策提供支持，这时候就是在做OLAP了。</p>
+
+<p>因为OLTP所产生的业务数据分散在不同的业务系统中，而OLAP往往需要将不同的业务数据集中到一起进行统一综合的分析，这时候就需要根据业务分析需求做对应的数据清洗后存储在数据仓库中，然后由数据仓库来统一提供OLAP分析。所以我们常说OLTP是数据库的应用，OLAP是数据仓库的应用，下面用一张图来简要对比。</p>
+
+<p>所以OLAP和OLTP之间的关系可以认为OLAP是依赖于OLTP的，因为OLAP分析的数据都是由OLTP所产生的，也可以看作OLAP是OLTP的一种延展，一个让OLTP产生的数据发现价值的过程。</p>
+
+<h2 id="视频">视频</h2>
+
+<iframe src="//player.bilibili.com/player.html?bvid=BV1pf4y1E7Tp&amp;page=5" width="100%" height="500px" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
+        
+<hr>
+<p>
+    本文会经常更新，请阅读原文： <a href="https://note.guoqianfan.com/2021/09/25/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E4%BA%91%E6%95%B0%E6%8D%AE%E5%BA%93Redis%E5%8A%A9%E5%8A%9B%E6%B8%B8%E6%88%8F%E8%A1%8C%E4%B8%9A%E5%8F%91%E5%B1%95-%E9%98%BF%E9%87%8C%E4%BA%91/">https://note.guoqianfan.com/2021/09/25/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E4%BA%91%E6%95%B0%E6%8D%AE%E5%BA%93Redis%E5%8A%A9%E5%8A%9B%E6%B8%B8%E6%88%8F%E8%A1%8C%E4%B8%9A%E5%8F%91%E5%B1%95-%E9%98%BF%E9%87%8C%E4%BA%91/</a> ，以避免陈旧错误知识的误导，同时有更好的阅读体验。
+</p>
+<p>    
+    如果你想持续阅读我的最新博客，请点击 <a href="/feed.xml">RSS 订阅</a>。
+</p>
+<p>
+    <a rel="知识共享许可协议" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+        <img alt="知识共享许可协议" src="https://img.guoqianfan.com/public/by-nc-sa.svg" />
+    </a>
+    本作品采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a> 进行许可。欢迎转载、使用、重新发布，但务必保留文章署名 过千帆的记事本（包含链接： <a href="https://note.guoqianfan.com">https://note.guoqianfan.com</a> ），不得用于商业目的，基于本文修改后的作品务必以相同的许可发布。如有任何疑问，请 <a href="mailto:gg@guoqianfan.com">与我联系</a> 。
+</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">Similar Posts</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="/2021/09/24/Redis%E5%AE%B9%E7%81%BE%E4%BD%93%E7%B3%BB%E6%9E%84%E5%BB%BA-%E9%98%BF%E9%87%8C%E4%BA%91/">Redis容灾体系构建-阿里云
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2021/09/23/Redis%E7%83%AD%E7%82%B9Key%E7%9A%84%E5%8F%91%E7%8E%B0%E4%B8%8E%E8%A7%A3%E5%86%B3%E4%B9%8B%E9%81%93-%E9%98%BF%E9%87%8C%E4%BA%91/">Redis热点Key的发现与解决之道-阿里云
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="/2021/09/22/Redis%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E4%BB%8B%E7%BB%8D-%E9%98%BF%E9%87%8C%E4%BA%91/">Redis读写分离介绍-阿里云
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2021/09/24/Redis%E5%AE%B9%E7%81%BE%E4%BD%93%E7%B3%BB%E6%9E%84%E5%BB%BA-%E9%98%BF%E9%87%8C%E4%BA%91/">Redis容灾体系构建-阿里云</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2022/04/22/operator-implicit-explicit-in-csharp/">C#中的类型转换-自定义隐式转换和显式转换</a></p>
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">Comments</h2>
+        
+
+
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC81Mjc1Ni8yOTIzMw==">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#similar_posts">Similar Posts</a></li>
+                    
+                    <li><a href="#comments">Comments</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+
+document.querySelectorAll("div.highlighter-rouge[class*='language']")
+    .forEach(p => p.setAttribute('data-lang', [...p.classList].find(c => c.includes("language")).split('-')[1].replace('plaintext',''))
+    );
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             存在的痕迹 
+        </p>
+        <p class="contact">
+            Contact me at: 
+            <a href="https://github.com/BlueHtml" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>  
+            <a href="mailto:gg@guoqianfan.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>         
+            <a href="https://t.me/Xiao_C" title="Telegram"><i class="fa fa-telegram" aria-hidden="true"></i></a>  
+            <a href="/feed.xml" title="RSS"><i class="fa fa-rss" aria-hidden="true"></i></a> 
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a> & <a href="https://pages.github.com/">Github Pages</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>
