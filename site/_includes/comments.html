@@ -40,7 +40,22 @@
        e.parentNode.insertBefore(j, e);
    })(document, 'script');
 	</script>
-<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
 </div>
 <!-- City版安装代码已完成 -->
+{% endif %}
+
+{% if site.valine_shortname %}
+<script src='//registry.npmmirror.com/valine/1.5.3/files/dist/Valine.min.js'></script>
+<div id="vcomments"></div>
+<script>
+    const valineStr = "{{ site.valine_shortname }}";
+    const valines = valineStr.split(';');
+    new Valine({
+        el: '#vcomments',
+        appId: valines[0],
+        appKey: valines[1]
+    })
+</script>
+<noscript>为正常使用valine评论功能请激活JavaScript</noscript>
 {% endif %}

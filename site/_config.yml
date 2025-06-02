@@ -43,10 +43,11 @@ rss_path: /feed.xml
 description_footer: 存在的痕迹
 
 # comments
-# two ways to comment, only choose one, and use your own short name
-# 两种评论插件，选一个就好了，使用自己的 short_name
-livere_shortname: MTAyMC81Mjc1Ni8yOTIzMw==
-disqus_shortname: #https-17xiao-coding-me
+# three ways to comment, only choose one, and use your own short name
+# 三种评论插件，选一个就好了，使用自己的 short_name
+valine_shortname: K1ffJn64dkpmxpkuwpsMRX7a-gzGzoHsz;UAWWlhqfcqD8ftLWq1NDsUlb # AppID;AppKey
+livere_shortname: # MTAyMC81Mjc1Ni8yOTIzMw==
+disqus_shortname: # https-17xiao-coding-me
 
 # link 友链
 # 两种方式：1.本地定义；2.远程返回(json)
